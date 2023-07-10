@@ -16,7 +16,7 @@ const currentDate = new Date();
 let dateFromUser;
 
 
-const datePicker =flatpickr("#datetime-picker", {
+flatpickr("#datetime-picker", {
 enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
