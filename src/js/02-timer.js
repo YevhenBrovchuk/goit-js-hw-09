@@ -4,7 +4,7 @@ import Notiflix from 'notiflix';
 
 
 
-// const flatpickr = require("flatpickr");
+const flatpickr = require("flatpickr");
 const btnStartEl=document.querySelector("button[data-start]")
 const daysEl = document.querySelector("span[data-days]")
 const hoursEl = document.querySelector("span[data-hours]")
