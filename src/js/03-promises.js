@@ -12,22 +12,25 @@ function handleSubmit(ev) {
     return;
   }
 
-  info.delay = delay.value;
-  info.step = step.value;
-  info.amount = amount.value;
-
+  info.delay = Number(delay.value);
+  info.step = Number(step.value);
+  info.amount = Number(amount.value);
+console.log(typeof info.delay);
   formEl.reset();
-  setTimeout(() => {
+  
   for (let i = 0; i < info.amount; i += 1){
-       createPromise(i, info.delay)
+    const pos = i + 1;
+    const current=info.delay+(i*info.step)
+       createPromise(pos, current)
       .then(({ position, delay }) => {
         Notiflix.Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
       })
       .catch(({ position, delay }) => {
       Notiflix.Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
       })
+     
   }
- }, info.delay)
+ 
 
 }
 
@@ -40,12 +43,15 @@ function handleSubmit(ev) {
 function createPromise(position, delay) {
 const shouldResolve = Math.random() > 0.3;
   return new Promise((res, rej) => {
-    
+    setTimeout(() => {
+      
       if (shouldResolve) {
     res({position, delay})
   } else {
     rej({position, delay})
   }
+    }, delay)
+    
   
   })
    
