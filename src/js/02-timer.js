@@ -12,19 +12,19 @@ const secondsEl=document.querySelector("span[data-seconds]")
 btnStartEl.disabled = true;
 btnStartEl.addEventListener("click", handlerStartTimer)
 
-const currentDate = new Date();
-let dateFromUser;
 
+let dateFromUser;
 
 flatpickr("#datetime-picker", {
 enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
   minuteIncrement: 1,
-    onClose(selectedDates) {
-        dateFromUser = selectedDates[0];
-        if (currentDate > dateFromUser) {
-            Notiflix.Notify.failure("Please choose a date in the future");
+    onClose([selectedDates]) {
+        dateFromUser = selectedDates;
+        if (Date.now() > selectedDates) {
+            btnStartEl.disabled = true;
+         Notiflix.Notify.failure("Please choose a date in the future");
             return;
         }
         else {
@@ -34,21 +34,36 @@ enableTime: true,
 
 function handlerStartTimer() {
     const idInterval = setInterval(() => {
-        
-        const resTimer = convertMs(dateFromUser - new Date())
+        const resTimer = convertMs(dateFromUser - new Date.now())
         console.log(resTimer);
         if (resTimer.seconds >= 0) {
-            daysEl.textContent = resTimer.days.toString().padStart(2,"0");
-        hoursEl.textContent = resTimer.hours.toString().padStart(2,"0");
-        minutesEl.textContent = resTimer.minutes.toString().padStart(2,"0");
-        secondsEl.textContent = resTimer.seconds.toString().padStart(2,"0");
+            createMarkupItems(resTimer)
+            
         }
         else {
             clearInterval(idInterval)
         }
+        
     }, 1000)
     
 }
+
+function createMarkupItems(res){
+       daysEl.textContent = addNulNumber(res.days);
+        hoursEl.textContent = addNulNumber(res.hours);
+        minutesEl.textContent = addNulNumber(res.minutes);
+        secondsEl.textContent = addNulNumber(res.seconds);
+}
+
+function addNulNumber(val) {
+    return val.toString().padStart(2,"0")
+} 
+
+
+
+
+
+
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time

@@ -4,7 +4,7 @@ const bodyEl=document.querySelector("body")
 
 btnStartEl.addEventListener("click", handlerBodyColor)
 btnStopEl.addEventListener("click", handlerStopBodyColor)
-window.addEventListener("load", isHistory)
+// window.addEventListener("load", isHistory)
 let timerId = null;
 
 
@@ -12,23 +12,21 @@ function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, 0)}`;
 }
 
-function isHistory() {
-    btnStopEl.disabled=true
-}
+
 
 function handlerBodyColor(evt)
 {
-    switchDisabled(evt.target, btnStopEl)
+    switchDisabled(evt.target, btnStopEl, "false")
      timerId = setInterval(() => {bodyEl.style.backgroundColor=getRandomHexColor() },1000)
 }
 
 function handlerStopBodyColor(evt) {
-    switchDisabled(evt.target, btnStartEl)
+    switchDisabled(evt.target, btnStartEl, "true")
     clearInterval(timerId);
 }
-function switchDisabled(evt, btn) {
-    if (evt.disabled === false) {
-        evt.disabled = true;
-        btn.disabled = false;
-    }
+function switchDisabled(evt, btn, flag) {
+    
+        evt.disabled = flag;
+        btn.disabled = !flag;
+    
 }
