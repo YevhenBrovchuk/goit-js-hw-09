@@ -34,7 +34,7 @@ enableTime: true,
 
 function handlerStartTimer() {
     const idInterval = setInterval(() => {
-        const resTimer = convertMs(dateFromUser - new Date.now())
+        const resTimer = convertMs(dateFromUser - Date.now())
         console.log(resTimer);
         if (resTimer.seconds >= 0) {
             createMarkupItems(resTimer)
